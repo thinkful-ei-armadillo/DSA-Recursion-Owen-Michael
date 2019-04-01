@@ -1,3 +1,5 @@
+'use strict';
+
 // What is the input to the program ?
 //   What is the output of the program ?
 //     What is the input to each recursive call ?
@@ -17,7 +19,11 @@ function countingSheep(numSheep) {
 
 // countingSheep(5);
 
+
+
 // #2 power calculator
+
+
 function powerCalculator(base, exponent) {
   if (exponent < 0) {
     return console.log('exponent should be >= 0');
@@ -38,3 +44,28 @@ function powerCalculator(base, exponent) {
 // 10,2 10 * 10 * 1
 
 // console.log(powerCalculator(10, 3));
+
+
+// function reverseString (str) {
+
+//   if (str.length === 0) {
+//     return '';
+//   }
+//   let newstring = str.charAt(0); 
+//   return [...reverseString(str.slice(1)), newstring].join('');
+
+// }
+
+// console.log(reverseString('Hello'));
+
+function nthTriangle(num){
+  if (num === 1){
+    return 1;
+  } 
+  
+  return num + nthTriangle(num -1);
+
+}
+
+console.log(nthTriangle(5));
+console.log(nthTriangle(8));
