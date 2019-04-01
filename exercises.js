@@ -118,11 +118,13 @@ let maze = [
   [' ', ' ', ' ', ' ', ' ', ' ', 'e']
 ];
 
-function exitMaze(maze, position = [0, 0], path = [], solutions = path.length) {
+function exitMaze(maze, position = [0, 0], path = []) {
   if (position[0] === 4 && position[1] === 6) {
     console.log(path);
     return;
   }
+
+  let directions = [];
 
   let row = position[0];
   let col = position[1];
@@ -134,28 +136,34 @@ function exitMaze(maze, position = [0, 0], path = [], solutions = path.length) {
   //if multiple, push current path to new array
   // proceed moving both path arrays
 
+  // //if postition > 1 {
+  //   check how many directions
+  //   check both paths
+  //   solve both at same time
+  // }
+
   //checkdown
   if (!(row === numRow)) {
     if (maze[row + 1][col] === ' ' || maze[row + 1][col] === 'e') {
       maze[row][col] = 'S';
-      path.push('D');
-      return exitMaze(maze, (position = [row + 1, col]), path);
+      directions.push('D');
+      
     }
   }
   //checkright
   if (!(col === numCol)) {
     if (maze[row][col + 1] === ' ' || maze[row][col + 1] === 'e') {
       maze[row][col] = 'S';
-      path.push('R');
-      return exitMaze(maze, (position = [row, col + 1]), path);
+      directions.push('R');
+      
     }
   }
   //checkleft
   if (!(col === 0)) {
     if (maze[row][col - 1] === ' ' || maze[row][col - 1] === 'e') {
       maze[row][col] = 'S';
-      path.push('L');
-      return exitMaze(maze, (position = [row, col - 1]), path);
+      directions.push('L');
+      
     }
   }
 
@@ -163,10 +171,62 @@ function exitMaze(maze, position = [0, 0], path = [], solutions = path.length) {
   if (!(row === 0)) {
     if (maze[row + 1][col] === ' ' || maze[row + 1][col] === 'e') {
       maze[row][col] = 'S';
-      path.push('U');
-      return exitMaze(maze, (position = [row + 1, col]), path);
+      directions.push('U');
+      
     }
+
   }
+  console.log(path);
+
+  if (directions.length > 1){
+    path = [[path], [path]];
+  
+    directions.forEach((dir, i) => {
+      if (dir === 'U') {
+      
+        path[i].push(dir);
+        return exitMaze(maze, (position = [row + 1, col]), path[i]);
+      } 
+      if (dir === 'R') {
+      
+        path[i].push(dir);
+        console.log(path[0]);
+        return exitMaze(maze, (position = [row, col + 1]), path[i]);
+      } 
+      if (dir === 'L') {
+        path[i].push(dir);
+        return exitMaze(maze, (position = [row, col - 1]), path[i]);
+      } 
+      if (dir === 'D') {
+        path[i].push(dir);
+        return exitMaze(maze, (position = [row + 1, col]), path[i]);
+      } 
+  
+    });
+
+    
+  }
+  if (directions[0] === 'U') {
+      
+    path.push(directions[0]);
+    return exitMaze(maze, (position = [row + 1, col]), path);
+  } 
+  if (directions[0] === 'R') {
+  
+    path.push(directions[0]);
+    // console.log(path[0]);
+    return exitMaze(maze, (position = [row, col + 1]), path);
+  } 
+  if (directions[0] === 'L') {
+    path.push(directions[0]);
+    return exitMaze(maze, (position = [row, col - 1]), path);
+  } 
+  if (directions[0] === 'D') {
+    path.push(directions[0]);
+    return exitMaze(maze, (position = [row + 1, col]), path);
+  } 
 }
+
+
 
 exitMaze(maze);
